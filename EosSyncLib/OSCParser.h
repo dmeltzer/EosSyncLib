@@ -168,7 +168,7 @@ public:
 	static const char* GetSafeString(const char*buf, size_t size);
 	static bool IsIntString(const char *buf);
 	static bool IsFloatString(const char *buf);
-	static long GetInt32FromBuf(const char *buf);
+	static int GetInt32FromBuf(const char *buf);
 	static unsigned long GetUInt32FromBuf(const char *buf);
 	static long long GetInt64FromBuf(const char *buf);
 	static unsigned long long GetUInt64FromBuf(const char *buf);
@@ -211,7 +211,7 @@ public:
 
 	virtual void AddBool(bool b);
 	virtual void AddChar(char c);
-	virtual void AddInt32(long n);
+	virtual void AddInt32(int n);
 	virtual void AddUInt32(unsigned long n);
 	virtual void AddInt64(const long long &n);
 	virtual void AddUInt64(const unsigned long long &n);
@@ -224,7 +224,7 @@ public:
 	virtual void AddFalse();
 	virtual void AddNull();
 	virtual void AddInfinity();
-	virtual void AddMidi(long n);
+	virtual void AddMidi(int n);
 	virtual void AddTime(const long long &n);
 	virtual void AddOSCArg(const OSCArgument &arg);
 	virtual void AddOSCArgList(const OSCArgument *args, size_t count);
@@ -248,11 +248,11 @@ private:
 protected:
 	union uArgData
 	{
-		char*		binaryData;
-		long		int32Data;
+		char*	binaryData;
+		int		int32Data;
 		long long	int64Data;
 		float		float32Data;
-		double		float64Data;
+		double	float64Data;
 	};
 
 	struct sArgInfo

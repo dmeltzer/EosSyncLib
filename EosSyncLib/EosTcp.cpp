@@ -20,7 +20,7 @@
 
 #include "EosTcp.h"
 #include "EosLog.h"
-
+#include <cstring> //strlen
 #ifdef WIN32
 	#include "EosTcp_Win.h"
 #else

@@ -23,13 +23,14 @@
 #ifdef WIN32
 	#include <Winsock2.h>
 	#include <Windows.h>
-#else
+#elif defined __APPLE__
 	#include <mach/mach.h>
 	#include <mach/mach_time.h>
-	#include <unistd.h>
-	double EosTimer::sm_toMS = 0;
+#else // LINUX
+    #include <sys/time.h>
 #endif
-
+    #include <unistd.h>
+    double EosTimer::sm_toMS = 0;
 ////////////////////////////////////////////////////////////////////////////////
 
 EosTimer::EosTimer()
@@ -71,7 +72,7 @@ bool EosTimer::GetExpired(unsigned int ms) const
 
 void EosTimer::Init()
 {
-#ifndef WIN32
+#ifdef __APPLE__
 	if(sm_toMS == 0)
 	{
 		mach_timebase_info_data_t timeBase;
@@ -86,10 +87,14 @@ void EosTimer::Init()
 
 unsigned int EosTimer::GetTimestamp()
 {
-#ifdef WIN32
-	return timeGetTime();
-#else
-	return static_cast<unsigned int>(mach_absolute_time() * sm_toMS);
+#if defined WIN32
+    return timeGetTime();
+#elif defined __APPLE__
+    return static_cast<unsigned int>(mach_absolute_time() * sm_toMS);
+#else // Linux
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    return now.tv_usec/1000;
 #endif
 }
 

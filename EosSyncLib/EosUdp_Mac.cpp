@@ -21,6 +21,7 @@
 #include "EosUdp_Mac.h"
 #include "EosLog.h"
 #include <unistd.h>
+#include <cstring>
 #include <errno.h>
 #include <arpa/inet.h>
 
